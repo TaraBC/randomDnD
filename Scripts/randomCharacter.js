@@ -1,4 +1,9 @@
-class character(){
+function simpleGeneration(form){
+	playerName=form.player.value;
+	newCharacter= new character(playerName);
+}
+
+class character{
 	constructor(playerName){
 	/*Background info*/
 	this.name='';
@@ -61,8 +66,5 @@ class character(){
 	/*Features and traits*/
 	this.features=[]
 	}
-}
-function simpleGeneration(){
-	newCharacter=
+} 
 
-}
