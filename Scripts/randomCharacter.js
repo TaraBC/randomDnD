@@ -17,22 +17,39 @@ critRoleClasses=['Blood Hunter'];
 allClasses= basicClasses.concat(unearthedArcanaClasses,critRoleClasses);
 
 /*All backgrounds in Lists separated by pack*/
-acquisitionsBacks=['Celebrity Adventurers Scion','Failed Merchant','Gambler','Plaintiff','Rival Intern']
-basicBacks=['Acolyte','Charlatan','Criminal/Spy','Entertainer','Folk Hero','Gladiator','Guild Aritsan/Merchant','Hermit','Knight','Noble','Outlander','Pirate','Sage','Sailor','Soldier','Urchin']
-strahdBacks=['Haunted Ones']
-saltmarshBacks=['Fisher','Marine','Shipwright','Smuggler']
-ravnicaBacks=['Azorius Functionary','Boros Legionnaire','Dimir Operative','Golgari Agent','Gruul Anarch','Izzet Engineer','Orzhov Representative','Rakdos Cultist','Selesnya Initiate','Simic Scientist']
-swordCoastBacks=['City Watch/Investigator','Clan Crafter','Cloistered Scholar','Courtier','Faction Agent','Far Traveler','Inheritor','Knight Of The Order','Mercenary Veteran','Urban Bounty Hunter','Uthgardt Tribe Member','Waterdhavian Noble']
-tombBacks=['Anthropologist','Archaeologist']
-eberronBacks=['Cannith House Agent','Deneith House Agent','Ghallanda House Agent','Jorasco House Agent','Kundarak House Agent','Lyrandar House Agent','Medani House Agent','Orien House Agent','Phiarlan House Agent','Sivis House Agent','Tharashk House Agent','Thuranni House Agent','Vadalis House Agent']
-allBacks=acquisitionsBacks.concat(basicBacks,saltmarshBacks,strahdBacks,ravnicaBacks,swordCoastBacks,tombBacks,eberronBacks)
+acquisitionsBacks=['Celebrity Adventurers Scion','Failed Merchant','Gambler','Plaintiff','Rival Intern'];
+basicBacks=['Acolyte','Charlatan','Criminal/Spy','Entertainer','Folk Hero','Gladiator','Guild Aritsan/Merchant','Hermit','Knight','Noble','Outlander','Pirate','Sage','Sailor','Soldier','Urchin'];
+strahdBacks=['Haunted Ones'];
+saltmarshBacks=['Fisher','Marine','Shipwright','Smuggler'];
+ravnicaBacks=['Azorius Functionary','Boros Legionnaire','Dimir Operative','Golgari Agent','Gruul Anarch','Izzet Engineer','Orzhov Representative','Rakdos Cultist','Selesnya Initiate','Simic Scientist'];
+swordCoastBacks=['City Watch/Investigator','Clan Crafter','Cloistered Scholar','Courtier','Faction Agent','Far Traveler','Inheritor','Knight Of The Order','Mercenary Veteran','Urban Bounty Hunter','Uthgardt Tribe Member','Waterdhavian Noble'];
+tombBacks=['Anthropologist','Archaeologist'];
+eberronBacks=['Cannith House Agent','Deneith House Agent','Ghallanda House Agent','Jorasco House Agent','Kundarak House Agent','Lyrandar House Agent','Medani House Agent','Orien House Agent','Phiarlan House Agent','Sivis House Agent','Tharashk House Agent','Thuranni House Agent','Vadalis House Agent'];
+allBacks=acquisitionsBacks.concat(basicBacks,saltmarshBacks,strahdBacks,ravnicaBacks,swordCoastBacks,tombBacks,eberronBacks);
 
 /*Simple Generation*/
+
 function simpleGeneration(form){
 	playerName=form.player.value;
 	newCharacter= new character(playerName);
-	alert(allRaces);
+	newCharacter.lvl=1;
+	abilityScores(newCharacter);
+	newCharacter.race=allRaces[Math.floor(Math.random()*allRaces.length)];
+	
 }
+
+/*Ability Score function*/
+function abilityScores(character){
+	diceList=[];
+	for (i=0;i<6;i++){
+		tempList=[]
+		for (i=0;i<4;i++){
+			tempList.push(Math.floor(Math.random()*tempList.length))];
+			
+		}
+	}
+}
+
 
 /*D&D character class*/
 class character{
@@ -98,5 +115,4 @@ class character{
 	/*Features and traits*/
 	this.features=[]
 	}
-} 
-
+}
