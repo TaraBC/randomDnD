@@ -33,21 +33,9 @@ function simpleGeneration(form){
 	playerName=form.player.value;
 	newCharacter= new character(playerName);
 	newCharacter.lvl=1;
-	abilityScores(newCharacter);
-	newCharacter.race=allRaces[Math.floor(Math.random()*allRaces.length)];
+	newCharacter.randomRace(newCharacter); 
+	newCharacter.abilityScores(newCharacter);
 	
-}
-
-/*Ability Score function*/
-function abilityScores(character){
-	diceList=[];
-	for (i=0;i<6;i++){
-		tempList=[]
-		for (i=0;i<4;i++){
-			tempList.push(Math.floor(Math.random()*tempList.length))];
-			
-		}
-	}
 }
 
 
@@ -114,5 +102,62 @@ class character{
 	this.languages=[]
 	/*Features and traits*/
 	this.features=[]
+	
+	}
+	
+	/*METHOD: CALCULATE AND ASSIGN ABILITY SCORES*/
+	abilityScores(){
+	diceList=[];
+	/*for all 6 attributes*/
+	for (i=0;i<6;i++){
+		/*Create a temporary list of 4 numbers between 1 and 6*/
+		tempList=[]
+		for (j=0;j<4;i++){
+			tempList.push(Math.floor(Math.random()*6))];
+		}
+		/*Find and remove minimum*/
+		min=Math.min(...tempList);
+		found=false;
+		k=0;
+		sum=0;
+		while (found=false){
+			if (tempList[k]=min){
+				tempList.splice(k,1);
+				found=true
+			}
+			
+		}
+		/*Find sum of temporary numbers*/
+		for (l=0;l<3;l++){
+			sum+=tempList[l];
+		}
+		/*Push sum of temporary numbers to list of 6 attribute numbers*/
+		diceList.push(sum);
+	}
+	
+	/*Assign all ability attributes*/
+	if (this.str = ''){	
+		this.str=diceList[0];
+	}
+	this.strmod=modCalc(this.str);
+	if (this.dex = ''){	
+	this.dex=diceList[1];
+	}
+	this.dexmod=modCalc(this.dex);
+	if (this.con = ''){	
+	this.con=diceList[2];
+	}
+	this.conmod=modCalc(this.con);
+	this.intelligence=diceList[3];
+	this.intmod=modCalc(this.intelligence);
+	this.wis=diceList[4];
+	this.wismod=modCalc(this.wis);
+	this.cha=diceList[5];
+	this.chamod=modCalc(this.cha);
+	}
+	
+	/*METHOD: CALCULATE MODIFIERS*/
+	modCalc(score){
+		return (score)/2)-5;
 	}
 }

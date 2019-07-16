@@ -1,0 +1,53 @@
+@font-face{
+	font-family:fantasyFont;
+	src:url(../fonts/Dumbledore1/dum1.ttf);
+}
+body{
+	background-image:url(../Images/d20icon.png);
+	background-size:18.7%;
+	background-color:#FFFFF0;
+	margin-top:0px;
+	margin-bottom:0px;
+}
+
+h1{
+	font-size:50px;
+}
+
+.mainContent{
+	text-align:center;
+	margin:auto;
+	background:#F5F5DC;
+	width:40%;
+	height:42%;
+	border-style:solid;
+	border-color:#D2B48C;
+	border-radius:10px;
+	
+}
+.mainContent h1,p,button{
+	font-family:fantasyFont;
+}
+
+
+.mainContent button{
+	font-size:30px;
+	background-color:#D2B48C;
+	border:2px #D2B48C;
+	height:18%;
+	width:20%;
+	border-radius:10px;
+}
+
+.insideBox{
+	margin-top:5%;
+	margin-bottom:12.15%;
+	
+}
+
+.links{
+	text-align:right;
+	margin-right:5%;
+	bottom:2.5%;
+}
+
