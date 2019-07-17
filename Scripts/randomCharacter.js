@@ -43,11 +43,11 @@ function addition(total,num){
 function simpleGeneration(form){
 	var playerName=form.player.value;
 	if (!playerName){
-		alert("Please enter a player name");
+		alert("Please enter a player name"); //input validation
 	}
 	else{
 		
-	let newCharacter= new character(playerName);
+	let newCharacter= new character(playerName); //character initialisation
 	newCharacter.lvl=1;
 	newCharacter.randomRace([]); 
 	newCharacter.abilityScores();
@@ -123,24 +123,20 @@ class character{
 	
 	/*METHOD: CALCULATE AND ASSIGN ABILITY SCORES*/
 	abilityScores(){
-	var diceList=[null,null,null,null,null,null];
-	for (var i=0;i<6;i++){
+	var diceList=[null,null,null,null,null,null];	//initialise attribute array
+	for (var i=0;i<6;i++){	//for all attributes
 		var tempList=new Array(null,null,null,null);
 		for (var j=0;j<4;j++){
-			tempList[j]=D6[Math.floor(Math.random()*6)];
+			tempList[j]=D6[Math.floor(Math.random()*6)];	//rolling dice 4 times
 		}
 		var min=Math.min(...tempList);
-		var found=false;
-		var k=0;
-		while (found==false){
-			k+=1
-			console.log(k);
-			if (tempList[k]=min){
-				found=true;
+		for (var k=0;k<4;k++){			//remove lowest number
+			if (tempList[k]==min){
+				tempList.splice(k,1);
+				break;
 			}
-			
 		}
-		diceList[i]=tempList.reduce(addition);
+		diceList[i]=tempList.reduce(addition);		//add sum of the 3 numbers remaining to the diceList
 	}
 	
 	
@@ -173,7 +169,7 @@ class character{
 	
 	/*METHOD: CALCULATE MODIFIERS*/
 	modCalc(score){
-		return ((score)/2)-5;
+		return Math.floor(((score)/2)-5);
 	}
 	
 	/*Chooses random race*/
