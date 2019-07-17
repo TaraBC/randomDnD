@@ -16,7 +16,11 @@ h1{
 
 .mainContent{
 	text-align:center;
-	margin:auto;
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	margin-top: -21%;
+	margin-left: -20%;
 	background:#F5F5DC;
 	width:40%;
 	height:42%;
@@ -25,18 +29,21 @@ h1{
 	border-radius:10px;
 	
 }
-.mainContent h1,p,button{
+.mainContent h1,p,button,input[type=button]{
 	font-family:fantasyFont;
 }
 
 
-.mainContent button{
+.mainContent button,input[type=button]{
 	font-size:30px;
 	background-color:#D2B48C;
 	border:2px #D2B48C;
+	border-radius:10px;
+}
+
+.mainContent #simpleGenButton,#advancedGenButton{
 	height:18%;
 	width:20%;
-	border-radius:10px;
 }
 
 .insideBox{
@@ -50,4 +57,14 @@ h1{
 	margin-right:5%;
 	bottom:2.5%;
 }
+
+form[name=simpleGenForm] p{
+	font-size:30px;
+	margin-bottom:5%;
+}
+
+form[name=simpleGenForm] input[type=button] {
+	margin-top:5%;
+}
+
 

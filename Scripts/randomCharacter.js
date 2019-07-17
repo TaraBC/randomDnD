@@ -31,11 +31,16 @@ allBacks=acquisitionsBacks.concat(basicBacks,saltmarshBacks,strahdBacks,ravnicaB
 
 function simpleGeneration(form){
 	playerName=form.player.value;
+	if (playerName=''){
+		alert("Please enter a player name");
+	}
+	else{
+		
 	newCharacter= new character(playerName);
 	newCharacter.lvl=1;
 	newCharacter.randomRace(newCharacter); 
 	newCharacter.abilityScores(newCharacter);
-	
+	}
 }
 
 
@@ -113,7 +118,7 @@ class character{
 		/*Create a temporary list of 4 numbers between 1 and 6*/
 		tempList=[]
 		for (j=0;j<4;i++){
-			tempList.push(Math.floor(Math.random()*6))];
+			tempList.push(Math.floor(Math.random()*6));
 		}
 		/*Find and remove minimum*/
 		min=Math.min(...tempList);
@@ -158,6 +163,6 @@ class character{
 	
 	/*METHOD: CALCULATE MODIFIERS*/
 	modCalc(score){
-		return (score)/2)-5;
+		return ((score)/2)-5;
 	}
 }
