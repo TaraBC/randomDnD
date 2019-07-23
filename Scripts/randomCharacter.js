@@ -51,6 +51,7 @@ function simpleGeneration(form){
 	newCharacter.lvl=1;
 	newCharacter.randomRace([]); 
 	newCharacter.abilityScores();
+	newCharacter.profBonus=2;
 	}
 }
 
@@ -177,7 +178,19 @@ class character{
 	randomRace(preferences){
 		if (this.race==''){
 			if (preferences=[]){
-				this.race= allRaces[Math.floor(Math.random()*allRaces.length)];
+				this.race= allRaces[Math.floor(Math.random()*allRaces.length)];		//Pick races
+			}
+		}
+		/*Assign values based on race*/
+		if (this.race=='Dragonborn'){
+			this=
+		}
+	}
+	
+	randomClass(preferences){
+		if (this.Class==''){
+			if (preferences=[]){
+				this.Class=allClasses[Math.floor(Math.random()*allClasses.length)];
 			}
 		}
 	}
