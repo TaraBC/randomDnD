@@ -118,7 +118,7 @@ class character{
 	maxHP='';
 	hitDice='';
 	/*proficiencies and languages*/
-	proficiencies=[];
+	proficiencies=[[],[]];
 	languages=[];
 	/*Features and traits*/
 	features=[];
@@ -216,6 +216,7 @@ class character{
 			this.createDragonborn(adultPreference);
 		}
 		else if  (this.race==='Dwarf'){
+		    this.createDwarf(adultPreference);
         }
 		else if (this.race==='Elf'){
 
@@ -270,8 +271,26 @@ class character{
 		}
 	}
 
-	createDwarf(adultPreference){
-
+	createDwarf(adultPreference,toolPreference){
+        this.con+=2;
+        this.size='Medium';
+        this.speed=25;
+        this.features.push('Darkvision','Dwarven Resilience','Stonecunning');
+        this.proficiencies[1].push('Battleaxe','Handaxe','Light Hammer','Warhammer');
+        this.languages.push('Common','Dwarvish');
+        if (!toolPreference){
+            const tools=["Smith's tools","Brewer's Supplies","Mason's Tools"];
+            this.proficiencies[0].push(tools[Math.floor(Math.random()*tools.length)]);
+        }
+        else{
+            this.proficiencies[0].push(toolPreference);
+        }
+        if (adultPreference===true){
+            this.age=Math.floor(Math.random()*((350-18)+18));
+        }
+        else{
+            this.age=Math.floor(Math.random()*((350-10)+10))
+        }
     }
 
 
