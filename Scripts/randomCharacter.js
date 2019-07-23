@@ -33,6 +33,13 @@ const allBacks=acquisitionsBacks.concat(basicBacks,saltmarshBacks,strahdBacks,ra
 /*Dice arrays*/
 const D6 = Array(1,2,3,4,5,6);
 
+/*alignments*/
+const alignmentType=['Lawful','Neutral','Chaotic'];
+const alignmentType2=['Good','Neutral','Evil'];
+
+/*subclass arrays*/
+const dragonbornFires=['Black','Blue','Brass','Bronze','Copper','Gold','Green','Red','Silver','White'];
+
 /*addition for reduce*/
 function addition(total,num){
 	return total+num;
@@ -47,11 +54,7 @@ function simpleGeneration(form){
 	}
 	else{
 		
-	let newCharacter= new character(playerName); //character initialisation
-	newCharacter.lvl=1;
-	newCharacter.randomRace([]); 
-	newCharacter.abilityScores();
-	newCharacter.profBonus=2;
+	let newCharacter= new character(playerName,[],true,true); //character initialisation
 	}
 }
 
@@ -69,6 +72,8 @@ class character{
 	ideal='';
 	bonds='';
 	flaws='';
+	size='';
+	age='';
 	/*Ability Scores*/
 	str='';
 	strmod='';
@@ -117,9 +122,40 @@ class character{
 	languages=[];
 	/*Features and traits*/
 	features=[];
-	constructor(playerName){
+	constructor(playerName,DLCPreferences,completeRandom,adultPreference){
 		this.playerName=playerName;
-	
+        this.abilityScores();
+
+        if (completeRandom===true){
+			this.lvl=1;
+			this.profBonus=2;
+		}
+
+		if (this.race==='') {
+			this.randomRace(DLCPreferences,adultPreference);
+		}
+
+		if (this.class==='') {
+			this.randomClass(DLCPreferences);
+		}
+
+        if (this.alignment===''){
+            const alignment1 = alignmentType[Math.floor(Math.random()*alignmentType.length)];
+            const alignment2 = alignmentType2[Math.floor(Math.random()*alignmentType2.length)];
+            if (alignment1===alignment2){
+                this.alignment='True Neutral';
+            }
+            else{
+                alignment1.concat(' ',alignment2);
+            }
+        }
+
+		this.strmod=this.modCalc(this.str);
+		this.dexmod=this.modCalc(this.dex);
+		this.conmod=this.modCalc(this.con);
+		this.intmod=this.modCalc(this.intelligence);
+		this.wismod=this.modCalc(this.wis);
+		this.chamod=this.modCalc(this.cha);
 	}
 	
 	/*METHOD: CALCULATE AND ASSIGN ABILITY SCORES*/
@@ -145,47 +181,65 @@ class character{
 	if (this.str===''){
 		this.str=diceList[0];
 	}
-	this.strmod=character.modCalc(this.str);
 	if (this.dex === ''){
 	this.dex=diceList[1];
 	}
-	this.dexmod=character.modCalc(this.dex);
 	if (this.con === ''){
 	this.con=diceList[2];
 	}
-	this.conmod=character.modCalc(this.con);
 	if (this.intelligence===''){
 	this.intelligence=diceList[3];
 	}
-	this.intmod=character.modCalc(this.intelligence);
 	if (this.wis===''){
 	this.wis=diceList[4];
 	}
-	this.wismod=character.modCalc(this.wis);
 	if (this.cha===''){
 	this.cha=diceList[5];
 	}
-	this.chamod=character.modCalc(this.cha);
 	}
 	
 	/*METHOD: CALCULATE MODIFIERS*/
-	static modCalc(score){
+	modCalc(score){
 		return Math.floor(((score)/2)-5);
 	}
 	
 	/*Chooses random race*/
 	/*preferences is an array of chosen packs*/
-	randomRace(preferences){
-		if (this.race===''){
-			if (preferences === []){
-				this.race= allRaces[Math.floor(Math.random()*allRaces.length)];		//Pick races
+	randomRace(DLCpreferences,adultPreference){
+		if (this.race==='') {
+			if (DLCpreferences === []) {
+				this.race = allRaces[Math.floor(Math.random() * allRaces.length)];		//Pick races
 			}
 		}
 		/*Assign values based on race*/
 		if (this.race==='Dragonborn'){
+			this.createDragonborn(adultPreference);
 		}
+		else if  (this.race==='Dwarf'){
+        }
+		else if (this.race==='Elf'){
+
+        }
+		else if(this.race==='Gnome'){
+
+        }
+		else if (this.race==='Half-Elf'){
+
+        }
+		else if(this.race==='Halfling'){
+
+        }
+		else if (this.race==='Half-Orc'){
+
+        }
+		else if (this.race==='Human'){
+
+        }
+		else if (this.race==='Tiefling'){
+
+        }
 	}
-	
+
 	randomClass(preferences){
 		if (this.Class===''){
 			if (preferences === []){
@@ -193,4 +247,32 @@ class character{
 			}
 		}
 	}
+
+	//*Different race functions*//
+
+	createDragonborn(adultPreference,firePreference){
+		this.str+=2;
+		this.cha+=1;
+		this.size='Medium';
+		this.speed=30;
+		this.features.push('Draconic Ancestry','Breath Weapon','Damage Resistance');
+		this.languages.push('Common','Draconic');
+		if (!firePreference){
+			this.fireType=dragonbornFires[Math.floor(Math.random()*dragonbornFires.length)];
+		}
+		if (this.age===''){
+			if (adultPreference===true){
+				this.age=Math.floor(Math.random()*(81-14)+15); //random number between 15 and 81
+			}
+			else{
+				this.age=Math.floor(Math.random()*(81-2)+3);
+			}
+		}
+	}
+
+	createDwarf(adultPreference){
+
+    }
+
+
 }
