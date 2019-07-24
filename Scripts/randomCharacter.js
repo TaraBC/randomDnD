@@ -182,10 +182,12 @@ class character{
 	hitDice;
 	house;
 	/*proficiencies and languages*/
-	proficiencies=[[],[]];
+	proficiencies=[[],[],[]];
 	languages=[];
 	/*Features and traits*/
 	features=[];
+	spells=[[],[],[],[],[],[],[],[],[],[]];	//index 0 is cantrips, index 1 is 1st level spells, index 2 is 2nd level...etc.
+	spellSlots=[0,0,0,0,0,0,0,0,0,0];	//above applies for spellSlots
 	constructor(playerName,completeRandom,preferredName,preferredGender) {
 		this.playerName = playerName;
 		if (preferredName !== undefined){
@@ -283,7 +285,7 @@ class Race extends character{
 	raceHP=0;
 	raceFeatures=[];
 	raceLanguages=[];
-	raceProficiencies=[[],[]];			//workAround for proficiencies,languages and features
+	raceProficiencies=[[],[],[]];			//workAround for proficiencies,languages and features
 	childNames=[];
 	maleNames=[];
 	femaleNames=[];					//List of potential names
@@ -341,7 +343,7 @@ class Dragonborn extends Race{
 
 class Dwarf extends Race{
 	toolProficiencies=["Smith's Tools","Brewer's Supplies","Mason's Tools"];
-	constructor(playerName,adultPreference,completeRandom,toolPreference){
+	constructor(playerName,adultPreference,completeRandom,toolPreference,housePreference){ ///housePreference is an array - index 0 is whether house DLC is included, index 1 is whether user cares if character is in the house.
 		super(playerName,completeRandom);
 		this.maleNames.push('Adrik', 'Alberich', 'Baern', 'Barendd', 'Brottor', 'Bruenor', 'Dain', 'Darrak', 'Delg', 'Eberk', 'Einkil', 'Fargrim', 'Flint', 'Gardain', 'Harbek', 'Kildrak', 'Morgran', 'Orsik', 'Oskar', 'Rangrim', 'Rurik', 'Taklinn', 'Thoradin', 'Thorin', 'Tordek', 'Traubon', 'Travok', 'Ulfgar', 'Veit', 'Vondal');
 		this.femaleNames.push('Amber', 'Artin', 'Audhild', 'Bardryn', 'Dagnal', 'Diesa', 'Eldeth', 'Falkrunn', 'Finellen', 'Gunnloda', 'Gurdis', 'Helja', 'Hlin', 'Kathra', 'Kristryd', 'Ilde', 'Liftrasa', 'Mardred', 'Riswynn', 'Sannl', 'Torbera', 'Torgga', 'Vistra');
@@ -360,17 +362,41 @@ class Dwarf extends Race{
 		} else {
 			this.raceProficiencies[0].push(toolPreference);
 		}
+
+		if (housePreference[0]===true){					//Whether in House Kundarak or not
+			if (housePreference[1]===true){
+				this.houseCreator()
+			}
+			else{
+				const YN= truths[Math.floor(Math.random()*truths.length)];
+				if (YN===true){
+					this.houseCreator()
+				}
+			}
+		}
+	}
+
+	houseCreator(){
+		this.house='House Kundarak';
+		this.dex+=1;
+		this.intelligence+=1;
+		this.raceFeatures.push('Master Of Locks');
+		this.spells[1].push('Alarm');
 	}
 }
 
 class hillDwarf extends Dwarf{
-	constructor(playerName,adultPreference,completeRandom,toolPreference){
-		super(playerName,adultPreference,completeRandom,toolPreference);
+	constructor(playerName,adultPreference,completeRandom,toolPreference,housePreference){
+		super(playerName,adultPreference,completeRandom,toolPreference,housePreference);
+		this.wis+=1;
+		this.raceHP+=1;
 	}
 }
 
 class mountainDwarf extends Dwarf{
-	constructor(playerName,adultPreference,completeRandom,toolPreference){
-		super(playerName,adultPreference,completeRandom,toolPreference);
+	constructor(playerName,adultPreference,completeRandom,toolPreference,housePreference){
+		super(playerName,adultPreference,completeRandom,toolPreference,housePreference);
+		this.str+=2;
+		this.raceProficiencies[2].push('Light Armour','Medium Armour');
 	}
 }
