@@ -1,0 +1,10 @@
+Object.assign() to merge objects
+
+character.abilityScores() to be implemented on construction of RACE classes, none other
+alignment is assigned in the RACE class
+
+CLASHES BETWEEN DIFFERENT SUBCLASSES WHEN MERGING:
+Proficiencies
+Hit points
+Languages
+Equipment
