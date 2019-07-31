@@ -3,8 +3,18 @@ Object.assign() to merge objects
 character.abilityScores() to be implemented on construction of RACE classes, none other
 alignment is assigned in the RACE class
 
+proficiencies:
+index 0 is tools/objects
+index 1 is weapons
+index 2 is armour
+index 3 is general proficiencies
+
 CLASHES BETWEEN DIFFERENT SUBCLASSES WHEN MERGING:
 Proficiencies
 Hit points
 Languages
 Equipment
+
+WHEN DOING LEVELLING SYSTEM TAKE INTO ACCOUNT THE MAGIC OF
+Dark elves
+house kundarak dwarves

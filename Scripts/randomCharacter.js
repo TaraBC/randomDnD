@@ -182,7 +182,7 @@ class character{
 	hitDice;
 	house;
 	/*proficiencies and languages*/
-	proficiencies=[[],[],[]];
+	proficiencies=[[],[],[],[]];
 	languages=[];
 	/*Features and traits*/
 	features=[];
@@ -285,7 +285,8 @@ class Race extends character{
 	raceHP=0;
 	raceFeatures=[];
 	raceLanguages=[];
-	raceProficiencies=[[],[],[]];			//workAround for proficiencies,languages and features
+	raceProficiencies=[[],[],[],[]];			//workAround for proficiencies,languages and features
+	raceSpells=[[],[],[],[],[],[],[],[],[],[]];
 	childNames=[];
 	maleNames=[];
 	femaleNames=[];					//List of potential names
@@ -331,12 +332,16 @@ class Dragonborn extends Race{
 		this.speed = 30;
 		this.raceFeatures.push('Draconic Ancestry', 'Breath Weapon', 'Damage Resistance');
 		this.raceLanguages.push('Common', 'Draconic');
-		if (!firePreference) {
-			this.fireType = dragonbornFires[Math.floor(Math.random() * dragonbornFires.length)];
-		}
+		this.fireSelector(firePreference);
 		this.randomAge(adultPreference,81,14,2);
 		this.randomName(14);
 
+	}
+
+	fireSelector(firePreference){
+		if (!firePreference) {
+			this.fireType = dragonbornFires[Math.floor(Math.random() * dragonbornFires.length)];
+		}
 	}
 }
 
@@ -356,24 +361,10 @@ class Dwarf extends Race{
 		this.raceFeatures.push('No reduction in speed by heavy armour','Darkvision','Dwarven Resilience');
 		this.raceProficiencies[1].push('Battleaxe','Handaxe','Light Hammer','Warhammer');
 		this.languages.push('Common','Dwarvish');
-		if (toolPreference === undefined) {
-			const tool =this.toolProficiencies[Math.floor(Math.random()*this.toolProficiencies.length)];
-			this.raceProficiencies[0].push(tool);
-		} else {
-			this.raceProficiencies[0].push(toolPreference);
-		}
+		this.toolSelector(toolPreference);
+		this.houseSelector(housePreference);
 
-		if (housePreference[0]===true){					//Whether in House Kundarak or not
-			if (housePreference[1]===true){
-				this.houseCreator()
-			}
-			else{
-				const YN= truths[Math.floor(Math.random()*truths.length)];
-				if (YN===true){
-					this.houseCreator()
-				}
-			}
-		}
+
 	}
 
 	houseCreator(){
@@ -381,7 +372,30 @@ class Dwarf extends Race{
 		this.dex+=1;
 		this.intelligence+=1;
 		this.raceFeatures.push('Master Of Locks');
-		this.spells[1].push('Alarm');
+		this.raceSpells[1].push('Alarm');
+	}
+
+	houseSelector(housePreference){
+	if (housePreference[0]===true){					//Whether in House Kundarak or not
+		if (housePreference[1]===true){
+			this.houseCreator()
+		}
+		else{
+			const YN= truths[Math.floor(Math.random()*truths.length)];
+			if (YN===true) {
+				this.houseCreator()
+			}
+		}
+	}
+	}
+
+	toolSelector(toolPreference){
+		if (toolPreference === undefined) {
+			const tool =this.toolProficiencies[Math.floor(Math.random()*this.toolProficiencies.length)];
+			this.raceProficiencies[0].push(tool);
+		} else {
+			this.raceProficiencies[0].push(toolPreference);
+		}
 	}
 }
 
@@ -401,6 +415,8 @@ class mountainDwarf extends Dwarf{
 	}
 }
 
+//ELF
+
 class elf extends Race{
 	constructor(playerName,completeRandom,adultPreference) {
 		super(playerName, completeRandom);
@@ -412,9 +428,108 @@ class elf extends Race{
 		this.randomAge(adultPreference,751,99,10);
 		this.size='Medium';
 		this.speed=30;
-		this.raceFeatures.push('Darkvision',)
-		this.raceProficiencies
+		this.raceFeatures.push('Darkvision','Fey Ancestry','Trance');
+		this.raceLanguages.push('Common','Elven');
 	}
 
 
+}
+
+class darkElf extends elf{
+	constructor(playerName,completeRandom,adultPreference){
+		super(playerName,completeRandom,adultPreference);
+		this.cha+=1;
+		this.raceSpells[0].push('Dancing Lights');
+		this.raceProficiencies.push[3]('Perception');
+		this.raceFeatures[0]='Superior Darkvision';
+		this.raceFeatures.push('Sunlight Sensitivity');
+	}
+}
+
+class eladrin extends elf {
+	characterSeasons = ['Autumn', 'Winter', 'Spring', 'Summer'];
+	abilityScoreOptions = ['Int', 'Cha'];
+	autumnTraits = ['If someone is in need, you never withhold aid', 'You share what you have, with little regard to your own needs',
+		'There are no simple meals, only lavish feasts', 'You stock up on fine food and drink. You hate going without such comforts'];
+	autumnFlaws = ['You trust without thought', 'You give too much, leaving yourself without necessary supplies',
+		'Everyone is your friend, or potential friend', 'You spend excessively on creature comforts'];
+	winterTraits = ['Worst case is the most likely case', 'You preserve what you have, better to be hungry now and have food tomorrow',
+		'You are always on guard', 'Frugal'];
+	winterFlaws = ['Everything dies eventually, why bother building anything to last?', 'Nothing matters. You only allow others to guide actions',
+		'Your needs come first', 'You only speak to point out flaws in plans'];
+	springTraits = ['Every day is the best day of your life', 'You do everything with enthusiasm',
+		'You love music and song', "You can't stay still"];
+	springFlaws = ['You overdrink', 'You hate toiling. Life should be a life of pleasure',
+		'You get infatuated easily and quickly, but that fades just as fast', 'You overdo everything'];
+	summerTraits = ['You believe direct confrontation is the best way to solve problems',
+		'Overwhelming force can solve anything', 'You stand tall and strong so others can lean on you',
+		'You maintain an intimidating front to prevent fights'];
+	summerFlaws = ['Stubborn', 'The best option is swift, unexpected and overwhelming', 'Punch first, talk later',
+		'Your fury can carry you through everything'];
+	season;
+	ability;
+
+	constructor(playerName, completeRandom, adultPreference, seasonPreference, presetTraits, presetFlaws, abilityPreference) {
+		super(playerName, completeRandom, adultPreference);
+		this.raceFeatures.push('Fey Step','Shifting Seasons');
+		this.raceSpells.push('Friends', 'Chill Touch', 'Minor Illusion', 'Firebolt', 'See Shifting Seasons trait');
+		this.abilitySelector(abilityPreference);
+		this.seasonSelector(seasonPreference);
+		this.traitSelector(presetTraits);
+		this.flawSelector(presetFlaws);
+
+
+
+	}
+
+	seasonSelector(seasonPreference){
+		if (seasonPreference === undefined) {
+			this.season = this.characterSeasons[Math.floor(Math.random() * this.characterSeasons.length)];
+		} else {
+			this.season = seasonPreference;
+		}
+
+	}
+
+	traitSelector(presetTraits) {
+		if (presetTraits === false) {
+			if (this.season === 'Autumn') {
+				this.personalityTrait = this.autumnTraits[Math.floor(Math.random() * this.autumnTraits.length)];
+			} else if (this.season === 'Spring') {
+				this.personalityTrait = this.springTraits[Math.floor(Math.random() * this.springTraits.length)];
+			} else if (this.season === 'Winter') {
+				this.personalityTrait = this.winterTraits[Math.floor(Math.random() * this.winterTraits.length)];
+			} else if (this.season==='Summer'){
+				this.personalityTrait=this.summerTraits[Math.floor(Math.random() * this.summerTraits.length)];
+			}
+		}
+	}
+
+	flawSelector(presetFlaws){
+		if (presetFlaws===false){
+			if (this.season === 'Autumn') {
+				this.flaws = this.autumnFlaws[Math.floor(Math.random() * this.autumnFlaws.length)];
+			} else if (this.season === 'Spring') {
+				this.flaws = this.springFlaws[Math.floor(Math.random() * this.springFlaws.length)];
+			} else if (this.season === 'Winter') {
+				this.flaws = this.winterFlaws[Math.floor(Math.random() * this.winterFlaws.length)];
+			} else if (this.season==='Summer'){
+				this.flaws=this.summerFlaws[Math.floor(Math.random() * this.summerFlaws.length)];
+			}
+		}
+	}
+
+	abilitySelector(abilityPreference) {
+		if (abilityPreference === undefined) {		//if this doesnt have preference
+			this.ability = this.abilityScoreOptions[Math.floor(Math.random() * this.abilityScoreOptions.length)];
+
+		} else {
+			this.ability = abilityPreference;
+		}
+		if (this.ability === 'Int') {					//ASSIGN Ability Scores
+			this.intelligence += 1;
+		} else {
+			this.cha += 1;
+		}
+	}
 }
