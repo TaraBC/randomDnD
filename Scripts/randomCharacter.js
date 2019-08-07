@@ -1,12 +1,12 @@
 'use strict';
 
 /*All Races in Lists, separated by pack*/
-const basicRaces = ['Dragonborn', 'Hill Dwarf','Mountain Dwarf', 'Elf', 'Gnome', 'Half-Elf', 'Halfling', 'Half-Orc', 'Human', 'Tiefling'];
+const basicRaces = ['Dragonborn', 'Hill Dwarf','Mountain Dwarf', 'Dark Elf','High Elf', 'Gnome', 'Half-Elf', 'Halfling', 'Half-Orc', 'Human', 'Tiefling'];
 const elementalEvilRaces = ['Arakocra', 'Genasi', 'Goliath'];
 const volosMonsterRaces = ['Aasimar', 'Bugbear', 'Firbolg', 'Goblin', 'Hobgoblin', 'Kenku', 'Kobold', 'Lizardfolk', 'Orc', 'Tabaxi', 'Triton', 'Yuan-ti Pureblood'];
 const swordCoastRaces = ['Feral Tiefling'];
 const tortleRaces = ['Tortle'];
-const mordenkainenRaces = ['Gith'];
+const mordenkainenRaces = ['Gith','Eladrin'];
 const eberronRaces = ['Changeling', 'Kalashtar', 'Shifter', 'Warforged'];
 const ravnicaRaces=['Centaur','Loxodon','Minotaur','Simic Hybrid','Vedalken'];
 const acquisitionsRaces=['Verdan'];
@@ -88,9 +88,16 @@ function raceAssign(race,adultPreference,playerName){
 	else if (race==='Mountain Dwarf'){
 		return new mountainDwarf(playerName,adultPreference,true);
 	}
-	else if (race==='Elf'){
+	else if (race==='Eladrin'){
+	    return new eladrin(playerName,true,adultPreference);
 
 	}
+	else if (race==='Dark Elf'){
+	    return new darkElf(playerName,true,adultPreference);
+    }
+	else if (race==='High Elf'){
+	    return new highElf(playerName,true,adultPreference)
+    }
 	else if(race==='Gnome'){
 
 	}
@@ -318,7 +325,7 @@ class Race extends character{
 
 //////SUBCLASSES FOR RACE///////
 
-class Dragonborn extends Race{
+class Dragonborn extends Race{                  //DRAGONBORN RACE
 	fireType;
 	constructor(playerName,adultPreference,completeRandom,firePreference) {
 		super(playerName,completeRandom);
@@ -346,7 +353,7 @@ class Dragonborn extends Race{
 }
 
 
-class Dwarf extends Race{
+class Dwarf extends Race{                   //DWARF RACE
 	toolProficiencies=["Smith's Tools","Brewer's Supplies","Mason's Tools"];
 	constructor(playerName,adultPreference,completeRandom,toolPreference,housePreference){ ///housePreference is an array - index 0 is whether house DLC is included, index 1 is whether user cares if character is in the house.
 		super(playerName,completeRandom);
@@ -367,7 +374,7 @@ class Dwarf extends Race{
 
 	}
 
-	houseCreator(){
+	houseCreator(){                     //Creates house related attributes
 		this.house='House Kundarak';
 		this.dex+=1;
 		this.intelligence+=1;
@@ -389,7 +396,7 @@ class Dwarf extends Race{
 	}
 	}
 
-	toolSelector(toolPreference){
+	toolSelector(toolPreference){               //Selects tool proficiency
 		if (toolPreference === undefined) {
 			const tool =this.toolProficiencies[Math.floor(Math.random()*this.toolProficiencies.length)];
 			this.raceProficiencies[0].push(tool);
@@ -399,7 +406,7 @@ class Dwarf extends Race{
 	}
 }
 
-class hillDwarf extends Dwarf{
+class hillDwarf extends Dwarf{      //dwarf subraces
 	constructor(playerName,adultPreference,completeRandom,toolPreference,housePreference){
 		super(playerName,adultPreference,completeRandom,toolPreference,housePreference);
 		this.wis+=1;
@@ -426,6 +433,7 @@ class elf extends Race{
 		this.clanNames.push('Amakiir (Gemflower)', 'Amastacia (Starflower)', 'Galanodel (Moonwhisper)', 'Holimion (Diamonddew)', 'Ilphelkiir (Gemblossom)', 'Liadon (Silverfrond)', 'Meliamne (Oakenheel)', 'Naïlo (Nightbreeze)', 'Siannodel (Moonbrook)', 'Xiloscient (Goldpetal)');
 		this.dex+=2;
 		this.randomAge(adultPreference,751,99,10);
+		this.randomName(99);
 		this.size='Medium';
 		this.speed=30;
 		this.raceFeatures.push('Darkvision','Fey Ancestry','Trance');
@@ -435,12 +443,14 @@ class elf extends Race{
 
 }
 
+//Elf subraces
+
 class darkElf extends elf{
 	constructor(playerName,completeRandom,adultPreference){
 		super(playerName,completeRandom,adultPreference);
 		this.cha+=1;
 		this.raceSpells[0].push('Dancing Lights');
-		this.raceProficiencies.push[3]('Perception');
+		this.raceProficiencies[3].push('Perception');
 		this.raceFeatures[0]='Superior Darkvision';
 		this.raceFeatures.push('Sunlight Sensitivity');
 	}
@@ -532,4 +542,12 @@ class eladrin extends elf {
 			this.cha += 1;
 		}
 	}
+}
+
+class highElf extends elf{
+    constructor(playerName,completeRandom,adultPreference){
+        super(playerName,completeRandom,adultPreference);
+        this.intelligence+=1;
+        this.raceProficiencies.push('Longsword','Shortsword','Shortbow','Longbow');
+    }
 }
